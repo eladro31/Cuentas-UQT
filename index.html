@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>UQT — Unión Quintana Turi</title>
+  <title>UQT — Unión Quintana Turi v1.0 </title>
 
   <style>
     :root {
@@ -15,6 +15,7 @@
       --gris: #f2f4f5;
       --texto: #202020;
       --rojo: #d93025;
+      --amarillo: #d88900;
     }
 
     * {
@@ -39,6 +40,7 @@
 
     header h1 {
       font-size: 32px;
+      letter-spacing: 1px;
     }
 
     header p {
@@ -46,8 +48,9 @@
     }
 
     main {
-      max-width: 500px;
-      margin: 30px auto;
+      width: 100%;
+      max-width: 520px;
+      margin: 25px auto;
       padding: 15px;
     }
 
@@ -55,7 +58,7 @@
       background: white;
       padding: 25px;
       border-radius: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.10);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, .10);
       margin-bottom: 20px;
     }
 
@@ -63,6 +66,10 @@
       color: var(--azul);
       text-align: center;
       margin-bottom: 20px;
+    }
+
+    h3 {
+      color: var(--azul);
     }
 
     label {
@@ -78,6 +85,11 @@
       border: 1px solid #ccc;
       border-radius: 10px;
       font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--azul);
     }
 
     button {
@@ -111,6 +123,10 @@
       background: var(--rojo);
     }
 
+    .gris {
+      background: #777;
+    }
+
     .mensaje {
       text-align: center;
       margin-top: 15px;
@@ -118,53 +134,140 @@
     }
 
     .oculto {
-      display: none;
+      display: none !important;
     }
 
-    /* PAPEL UQT */
+    .centrado {
+      text-align: center;
+    }
+
+    /* ==========================
+       PAPEL UQT
+    ========================== */
 
     .papel {
       background: white;
+      border: 3px solid var(--azul);
       border-radius: 15px;
       padding: 20px;
-      border: 3px solid var(--azul);
       text-align: center;
     }
 
-    .papel h3 {
+    .papel-logo {
+      font-size: 28px;
+      font-weight: bold;
       color: var(--azul);
-      font-size: 25px;
     }
 
-    .papel .numero {
+    .papel-subtitulo {
+      color: var(--verde);
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    .papel-nombre {
       font-size: 20px;
       font-weight: bold;
-      margin: 12px 0;
+      margin-top: 20px;
+    }
+
+    .papel-numero {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 8px;
+      color: var(--azul);
     }
 
     #qr {
-      margin: 15px auto;
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    #qr img {
       width: 200px;
       height: 200px;
+      image-rendering: pixelated;
     }
+
+    .papel-aviso {
+      font-size: 13px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    /* ==========================
+       SALDO
+    ========================== */
 
     .saldo {
       text-align: center;
-      font-size: 30px;
+      font-size: 36px;
       font-weight: bold;
       color: var(--verde);
       margin: 15px 0;
     }
 
-    .movimiento {
+    .saldo-negativo {
+      color: var(--rojo);
+    }
+
+    .limite {
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* ==========================
+       LISTAS
+    ========================== */
+
+    .elemento {
+      padding: 14px 0;
       border-bottom: 1px solid #ddd;
-      padding: 12px 0;
+    }
+
+    .elemento:last-child {
+      border-bottom: none;
+    }
+
+    .monto {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .positivo {
+      color: var(--verde);
+    }
+
+    .negativo {
+      color: var(--rojo);
     }
 
     .pendiente {
-      color: #d88900;
+      color: var(--amarillo);
       font-weight: bold;
     }
+
+    .vacio {
+      text-align: center;
+      color: #777;
+      padding: 10px;
+    }
+
+    /* ==========================
+       NFC
+    ========================== */
+
+    .nfc-icono {
+      font-size: 55px;
+      text-align: center;
+      margin: 10px;
+    }
+
+    /* ==========================
+       PIE
+    ========================== */
 
     footer {
       text-align: center;
@@ -183,108 +286,152 @@
 
 <main>
 
-  <!-- ========================= -->
-  <!-- LOGIN / REGISTRO -->
-  <!-- ========================= -->
+  <!-- ==========================================
+       LOGIN / REGISTRO
+  =========================================== -->
 
   <section id="loginPanel" class="card">
 
     <h2>Ingresar a UQT</h2>
 
-    <label>Correo electrónico</label>
+    <label for="email">
+      Correo electrónico
+    </label>
+
     <input
       type="email"
       id="email"
       placeholder="tu@email.com"
+      autocomplete="email"
     >
 
-    <label>Contraseña</label>
+    <label for="password">
+      Contraseña
+    </label>
+
     <input
       type="password"
       id="password"
       placeholder="••••••••"
+      autocomplete="current-password"
     >
 
     <button id="btnLogin">
       Iniciar sesión
     </button>
 
-    <button id="btnRegistro" class="verde">
+    <button
+      id="btnRegistro"
+      class="verde"
+    >
       Crear cuenta UQT
     </button>
 
-    <button id="btnGoogle" class="google">
+    <button
+      id="btnGoogle"
+      class="google"
+    >
       🔵 Continuar con Google
     </button>
 
-    <div id="mensajeLogin" class="mensaje"></div>
+    <div
+      id="mensajeLogin"
+      class="mensaje"
+    ></div>
 
   </section>
 
 
-  <!-- ========================= -->
-  <!-- CREAR PERFIL -->
-  <!-- ========================= -->
+  <!-- ==========================================
+       PERFIL
+  =========================================== -->
 
-  <section id="perfilPanel" class="card oculto">
+  <section
+    id="perfilPanel"
+    class="card oculto"
+  >
 
     <h2>Crear tu cuenta UQT</h2>
 
-    <p style="text-align:center;">
-      Necesitamos tu nombre para crear tu papel UQT.
+    <p class="centrado">
+      Para terminar necesitamos tu nombre.
     </p>
 
-    <label>Nombre y apellido</label>
+    <label for="nombre">
+      Nombre y apellido
+    </label>
 
     <input
       type="text"
       id="nombre"
       placeholder="Ej: Adrián Turi"
+      autocomplete="name"
     >
 
-    <button id="btnCrearPerfil" class="verde">
+    <button
+      id="btnCrearPerfil"
+      class="verde"
+    >
       Crear mi cuenta UQT
     </button>
 
-    <div id="mensajePerfil" class="mensaje"></div>
+    <div
+      id="mensajePerfil"
+      class="mensaje"
+    ></div>
 
   </section>
 
 
-  <!-- ========================= -->
-  <!-- PANEL DEL USUARIO -->
-  <!-- ========================= -->
+  <!-- ==========================================
+       PANEL PRINCIPAL
+  =========================================== -->
 
-  <section id="panelUsuario" class="oculto">
+  <section
+    id="panelUsuario"
+    class="oculto"
+  >
+
+    <!-- PAPEL -->
 
     <div class="card">
 
-      <h2 id="saludo">
-        ¡Hola!
-      </h2>
+      <h2>Mi papel UQT</h2>
 
       <div class="papel">
 
-        <h3>UQT</h3>
+        <div class="papel-logo">
+          UQT
+        </div>
 
-        <p>
+        <div class="papel-subtitulo">
           UNIÓN QUINTANA TURI
-        </p>
+        </div>
 
-        <p id="nombrePapel"></p>
+        <div
+          id="nombrePapel"
+          class="papel-nombre"
+        >
+        </div>
 
-        <div class="numero" id="numeroUQT">
-          UQT-000000
+        <div
+          id="numeroUQT"
+          class="papel-numero"
+        >
         </div>
 
         <div id="qr"></div>
 
-        <p>
+        <div class="papel-aviso">
           Presentá este papel en los
           marcadores UQT.
-        </p>
+        </div>
 
       </div>
+
+      <button id="btnImprimir">
+        🖨️ Imprimir papel UQT
+      </button>
 
     </div>
 
@@ -295,24 +442,34 @@
 
       <h2>Saldo actual</h2>
 
-      <div class="saldo" id="saldo">
+      <div
+        id="saldo"
+        class="saldo"
+      >
         $0
       </div>
 
-      <p style="text-align:center;">
+      <div class="limite">
         Saldo negativo máximo: -$5.000
-      </p>
+      </div>
 
     </div>
 
 
-    <!-- CARGAR -->
+    <!-- CARGAR SALDO -->
 
     <div class="card">
 
       <h2>Cargar saldo</h2>
 
-      <label>Monto</label>
+      <p class="centrado">
+        La carga quedará pendiente hasta
+        ser acreditada en un marcador UQT.
+      </p>
+
+      <label for="montoCarga">
+        Monto
+      </label>
 
       <input
         type="number"
@@ -321,11 +478,17 @@
         min="1"
       >
 
-      <button id="btnCarga" class="verde">
+      <button
+        id="btnCarga"
+        class="verde"
+      >
         Solicitar carga
       </button>
 
-      <div id="mensajeCarga" class="mensaje"></div>
+      <div
+        id="mensajeCarga"
+        class="mensaje"
+      ></div>
 
     </div>
 
@@ -337,16 +500,27 @@
       <h2>Cargas pendientes</h2>
 
       <div id="cargasPendientes">
-        No hay cargas pendientes.
+        <div class="vacio">
+          Cargando...
+        </div>
+      </div>
+
+      <div class="nfc-icono">
+        📡
       </div>
 
       <button id="btnNFC">
-        📡 Acreditar mediante NFC
+        Acreditar mediante NFC
       </button>
 
-      <p style="text-align:center;margin-top:10px;color:#777;">
-        Simulación de acreditación NFC.
+      <p class="centrado" style="margin-top:10px;color:#777;">
+        Esta función simula la acreditación NFC.
       </p>
+
+      <div
+        id="mensajeNFC"
+        class="mensaje"
+      ></div>
 
     </div>
 
@@ -358,7 +532,9 @@
       <h2>Movimientos</h2>
 
       <div id="movimientos">
-        No hay movimientos.
+        <div class="vacio">
+          Cargando...
+        </div>
       </div>
 
     </div>
@@ -380,18 +556,27 @@
         anulados.
       </p>
 
-      <button id="btnCambiar" class="rojo">
+      <button
+        id="btnCambiar"
+        class="rojo"
+      >
         Cambiar papel UQT
       </button>
 
-      <div id="mensajeCambio" class="mensaje"></div>
+      <div
+        id="mensajeCambio"
+        class="mensaje"
+      ></div>
 
     </div>
 
 
     <!-- CERRAR SESIÓN -->
 
-    <button id="btnLogout" class="rojo">
+    <button
+      id="btnLogout"
+      class="rojo"
+    >
       Cerrar sesión
     </button>
 
@@ -404,14 +589,17 @@
 </footer>
 
 
-<!-- ========================= -->
-<!-- FIREBASE -->
-<!-- ========================= -->
+<!-- ==========================================
+     FIREBASE
+=========================================== -->
 
 <script type="module">
 
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+  import {
+    initializeApp
+  } from
+    "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
 
   import {
     getAuth,
@@ -424,6 +612,7 @@
   } from
     "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
 
+
   import {
     getFirestore,
     doc,
@@ -434,15 +623,16 @@
     addDoc,
     query,
     where,
+    orderBy,
     getDocs,
-    orderBy
+    serverTimestamp
   } from
     "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
 
 
-  /* ========================= */
-  /* CONFIGURACIÓN */
-  /* ========================= */
+  /* ==========================================
+     FIREBASE CONFIG
+  =========================================== */
 
   const firebaseConfig = {
 
@@ -467,16 +657,27 @@
   };
 
 
-  const app = initializeApp(firebaseConfig);
+  const app =
+    initializeApp(firebaseConfig);
 
-  const auth = getAuth(app);
+  const auth =
+    getAuth(app);
 
-  const db = getFirestore(app);
+  const db =
+    getFirestore(app);
 
 
-  /* ========================= */
-  /* ELEMENTOS */
-  /* ========================= */
+  /* ==========================================
+     VARIABLES
+  =========================================== */
+
+  let usuarioActual = null;
+  let datosUsuario = null;
+
+
+  /* ==========================================
+     ELEMENTOS
+  =========================================== */
 
   const loginPanel =
     document.getElementById("loginPanel");
@@ -488,12 +689,9 @@
     document.getElementById("panelUsuario");
 
 
-  let usuarioActual = null;
-
-
-  /* ========================= */
-  /* GENERAR NÚMERO UQT */
-  /* ========================= */
+  /* ==========================================
+     GENERAR NÚMERO UQT
+  =========================================== */
 
   function generarNumeroUQT() {
 
@@ -508,189 +706,296 @@
   }
 
 
-  /* ========================= */
-  /* LOGIN */
-  /* ========================= */
+  /* ==========================================
+     LOGIN EMAIL
+  =========================================== */
 
   document
     .getElementById("btnLogin")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const email =
-        document.getElementById("email").value;
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
 
-      const password =
-        document.getElementById("password").value;
+        const password =
+          document
+            .getElementById("password")
+            .value;
 
-      try {
 
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+        if (!email || !password) {
 
-      } catch (error) {
+          document
+            .getElementById("mensajeLogin")
+            .textContent =
+              "❌ Completá todos los campos.";
 
-        document.getElementById(
-          "mensajeLogin"
-        ).textContent =
-          "❌ " + error.message;
+          return;
+
+        }
+
+
+        try {
+
+          await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+        } catch (error) {
+
+          console.error(error);
+
+          document
+            .getElementById("mensajeLogin")
+            .textContent =
+              "❌ No se pudo iniciar sesión.";
+
+        }
 
       }
+    );
 
-    });
 
-
-  /* ========================= */
-  /* REGISTRO */
-  /* ========================= */
+  /* ==========================================
+     REGISTRO EMAIL
+  =========================================== */
 
   document
     .getElementById("btnRegistro")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const email =
-        document.getElementById("email").value;
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
 
-      const password =
-        document.getElementById("password").value;
+        const password =
+          document
+            .getElementById("password")
+            .value;
 
-      try {
 
-        await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+        if (!email || !password) {
 
-        loginPanel.classList.add("oculto");
+          document
+            .getElementById("mensajeLogin")
+            .textContent =
+              "❌ Completá correo y contraseña.";
 
-        perfilPanel.classList.remove("oculto");
+          return;
 
-      } catch (error) {
+        }
 
-        document.getElementById(
-          "mensajeLogin"
-        ).textContent =
-          "❌ " + error.message;
+
+        try {
+
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+        } catch (error) {
+
+          console.error(error);
+
+          document
+            .getElementById("mensajeLogin")
+            .textContent =
+              "❌ " + traducirError(error);
+
+        }
 
       }
+    );
 
-    });
 
-
-  /* ========================= */
-  /* GOOGLE */
-  /* ========================= */
+  /* ==========================================
+     GOOGLE
+  =========================================== */
 
   document
     .getElementById("btnGoogle")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const provider =
-        new GoogleAuthProvider();
+        const provider =
+          new GoogleAuthProvider();
 
-      try {
 
-        await signInWithPopup(
-          auth,
-          provider
-        );
+        try {
 
-      } catch (error) {
+          await signInWithPopup(
+            auth,
+            provider
+          );
 
-        document.getElementById(
-          "mensajeLogin"
-        ).textContent =
-          "❌ " + error.message;
+        } catch (error) {
+
+          console.error(error);
+
+          document
+            .getElementById("mensajeLogin")
+            .textContent =
+              "❌ No se pudo iniciar con Google.";
+
+        }
 
       }
+    );
 
-    });
 
-
-  /* ========================= */
-  /* CREAR PERFIL */
-  /* ========================= */
+  /* ==========================================
+     CREAR PERFIL
+  =========================================== */
 
   document
     .getElementById("btnCrearPerfil")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const nombre =
-        document.getElementById("nombre").value.trim();
-
-      if (!nombre) {
-
-        document.getElementById(
-          "mensajePerfil"
-        ).textContent =
-          "❌ Escribí tu nombre.";
-
-        return;
-
-      }
-
-      if (!usuarioActual) return;
+        if (!usuarioActual) {
+          return;
+        }
 
 
-      const numeroUQT =
-        generarNumeroUQT();
+        const nombre =
+          document
+            .getElementById("nombre")
+            .value
+            .trim();
 
 
-      await setDoc(
-        doc(
-          db,
-          "usuarios",
-          usuarioActual.uid
-        ),
-        {
+        if (!nombre) {
 
-          nombre: nombre,
+          document
+            .getElementById("mensajePerfil")
+            .textContent =
+              "❌ Escribí tu nombre.";
 
-          email:
-            usuarioActual.email,
-
-          numeroUQT:
-            numeroUQT,
-
-          saldo: 0,
-
-          tarjetaActiva: true,
-
-          creado:
-            new Date()
+          return;
 
         }
-      );
 
 
-      mostrarPanel();
+        try {
 
-    });
+          const numeroUQT =
+            generarNumeroUQT();
 
 
-  /* ========================= */
-  /* MOSTRAR PANEL */
-  /* ========================= */
+          await setDoc(
+            doc(
+              db,
+              "usuarios",
+              usuarioActual.uid
+            ),
+            {
 
-  async function mostrarPanel() {
+              nombre:
+                nombre,
 
-    const ref =
+              email:
+                usuarioActual.email,
+
+              numeroUQT:
+                numeroUQT,
+
+              saldo:
+                0,
+
+              tarjetaActiva:
+                true,
+
+              creado:
+                serverTimestamp()
+
+            }
+          );
+
+
+          await addDoc(
+            collection(
+              db,
+              "usuarios",
+              usuarioActual.uid,
+              "movimientos"
+            ),
+            {
+
+              tipo:
+                "cuenta_creada",
+
+              descripcion:
+                "Cuenta UQT creada",
+
+              monto:
+                0,
+
+              fecha:
+                serverTimestamp()
+
+            }
+          );
+
+
+          await cargarUsuario();
+
+        } catch (error) {
+
+          console.error(error);
+
+          document
+            .getElementById("mensajePerfil")
+            .textContent =
+              "❌ No se pudo crear la cuenta.";
+
+        }
+
+      }
+    );
+
+
+  /* ==========================================
+     CARGAR DATOS DEL USUARIO
+  =========================================== */
+
+  async function cargarUsuario() {
+
+    if (!usuarioActual) {
+      return;
+    }
+
+
+    const referencia =
       doc(
         db,
         "usuarios",
         usuarioActual.uid
       );
 
-    const snap =
-      await getDoc(ref);
+
+    const resultado =
+      await getDoc(referencia);
 
 
-    if (!snap.exists()) {
+    if (!resultado.exists()) {
 
       loginPanel.classList.add("oculto");
+
+      panelUsuario.classList.add("oculto");
 
       perfilPanel.classList.remove("oculto");
 
@@ -699,9 +1004,24 @@
     }
 
 
-    const datos =
-      snap.data();
+    datosUsuario =
+      resultado.data();
 
+
+    mostrarPanel();
+
+    await cargarCargasPendientes();
+
+    await cargarMovimientos();
+
+  }
+
+
+  /* ==========================================
+     MOSTRAR PANEL
+  =========================================== */
+
+  function mostrarPanel() {
 
     loginPanel.classList.add("oculto");
 
@@ -710,125 +1030,756 @@
     panelUsuario.classList.remove("oculto");
 
 
-    document.getElementById(
-      "saludo"
-    ).textContent =
-      "¡Hola, " + datos.nombre + "!";
+    document
+      .getElementById("saludo")
+      .textContent =
+      "¡Hola, " +
+      datosUsuario.nombre +
+      "!";
 
 
-    document.getElementById(
-      "nombrePapel"
-    ).textContent =
-      datos.nombre;
+    document
+      .getElementById("nombrePapel")
+      .textContent =
+      datosUsuario.nombre;
 
 
-    document.getElementById(
-      "numeroUQT"
-    ).textContent =
-      datos.numeroUQT;
+    document
+      .getElementById("numeroUQT")
+      .textContent =
+      datosUsuario.numeroUQT;
 
 
-    document.getElementById(
-      "saldo"
-    ).textContent =
-      "$" + datos.saldo;
+    actualizarSaldo(
+      datosUsuario.saldo || 0
+    );
 
 
     generarQR(
-      datos.numeroUQT
+      datosUsuario.numeroUQT
     );
 
   }
 
 
-  /* ========================= */
-  /* QR */
-  /* ========================= */
+  /* ==========================================
+     SALDO
+  =========================================== */
 
-  function generarQR(texto) {
+  function actualizarSaldo(saldo) {
 
-    const qr =
-      document.getElementById("qr");
+    const elemento =
+      document.getElementById("saldo");
 
-    qr.innerHTML = "";
 
-    const imagen =
-      document.createElement("img");
+    elemento.textContent =
+      "$" + Number(saldo).toLocaleString("es-AR");
 
-    imagen.src =
-      "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="
-      + encodeURIComponent(texto);
 
-    imagen.width = 200;
+    if (saldo < 0) {
 
-    imagen.height = 200;
+      elemento.classList.add(
+        "saldo-negativo"
+      );
 
-    qr.appendChild(imagen);
+    } else {
+
+      elemento.classList.remove(
+        "saldo-negativo"
+      );
+
+    }
 
   }
 
 
-  /* ========================= */
-  /* CERRAR SESIÓN */
-  /* ========================= */
+  /* ==========================================
+     GENERAR QR
+  =========================================== */
+
+  function generarQR(texto) {
+
+    const contenedor =
+      document.getElementById("qr");
+
+
+    contenedor.innerHTML = "";
+
+
+    const imagen =
+      document.createElement("img");
+
+
+    imagen.alt =
+      "QR UQT";
+
+
+    /*
+      Por ahora usamos este generador
+      para probar el sistema.
+
+      Más adelante podemos reemplazarlo
+      por generación local del QR.
+    */
+
+    imagen.src =
+      "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
+      +
+      encodeURIComponent(texto);
+
+
+    contenedor.appendChild(imagen);
+
+  }
+
+
+  /* ==========================================
+     SOLICITAR CARGA
+  =========================================== */
 
   document
-    .getElementById("btnLogout")
-    .addEventListener("click", async () => {
+    .getElementById("btnCarga")
+    .addEventListener(
+      "click",
+      async () => {
 
-      await signOut(auth);
+        if (!usuarioActual) {
+          return;
+        }
 
-    });
+
+        const monto =
+          Number(
+            document
+              .getElementById("montoCarga")
+              .value
+          );
 
 
-  /* ========================= */
-  /* CONTROL DE SESIÓN */
-  /* ========================= */
+        if (!monto || monto <= 0) {
 
-  onAuthStateChanged(
-    auth,
-    async (user) => {
+          document
+            .getElementById("mensajeCarga")
+            .textContent =
+              "❌ Ingresá un monto válido.";
 
-      usuarioActual = user;
+          return;
 
-      if (!user) {
+        }
 
-        loginPanel.classList.remove("oculto");
 
-        perfilPanel.classList.add("oculto");
+        try {
 
-        panelUsuario.classList.add("oculto");
+          await addDoc(
+            collection(
+              db,
+              "usuarios",
+              usuarioActual.uid,
+              "cargas"
+            ),
+            {
+
+              monto:
+                monto,
+
+              estado:
+                "pendiente",
+
+              creada:
+                serverTimestamp()
+
+            }
+          );
+
+
+          await addDoc(
+            collection(
+              db,
+              "usuarios",
+              usuarioActual.uid,
+              "movimientos"
+            ),
+            {
+
+              tipo:
+                "carga_solicitada",
+
+              descripcion:
+                "Carga pendiente",
+
+              monto:
+                monto,
+
+              fecha:
+                serverTimestamp()
+
+            }
+          );
+
+
+          document
+            .getElementById("montoCarga")
+            .value = "";
+
+
+          document
+            .getElementById("mensajeCarga")
+            .textContent =
+              "✅ Carga solicitada. Quedará pendiente hasta ser acreditada.";
+
+
+          await cargarCargasPendientes();
+
+          await cargarMovimientos();
+
+        } catch (error) {
+
+          console.error(error);
+
+          document
+            .getElementById("mensajeCarga")
+            .textContent =
+              "❌ No se pudo solicitar la carga.";
+
+        }
+
+      }
+    );
+
+
+  /* ==========================================
+     CARGAS PENDIENTES
+  =========================================== */
+
+  async function cargarCargasPendientes() {
+
+    const contenedor =
+      document.getElementById(
+        "cargasPendientes"
+      );
+
+
+    contenedor.innerHTML = "";
+
+
+    try {
+
+      const referencia =
+        collection(
+          db,
+          "usuarios",
+          usuarioActual.uid,
+          "cargas"
+        );
+
+
+      const resultado =
+        await getDocs(referencia);
+
+
+      let cantidad = 0;
+
+
+      resultado.forEach(
+        (documento) => {
+
+          const carga =
+            documento.data();
+
+
+          if (
+            carga.estado ===
+            "pendiente"
+          ) {
+
+            cantidad++;
+
+
+            const elemento =
+              document.createElement(
+                "div"
+              );
+
+
+            elemento.className =
+              "elemento";
+
+
+            elemento.innerHTML = `
+              <div>
+                <strong>Carga pendiente</strong>
+              </div>
+
+              <div class="monto pendiente">
+                +$${Number(carga.monto).toLocaleString("es-AR")}
+              </div>
+
+              <div>
+                Esperando acreditación
+              </div>
+            `;
+
+
+            contenedor.appendChild(
+              elemento
+            );
+
+          }
+
+        }
+      );
+
+
+      if (cantidad === 0) {
+
+        contenedor.innerHTML =
+          '<div class="vacio">No hay cargas pendientes.</div>';
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      contenedor.innerHTML =
+        '<div class="vacio">No se pudieron cargar las cargas.</div>';
+
+    }
+
+  }
+
+
+  /* ==========================================
+     NFC SIMULADO
+  =========================================== */
+
+  document
+    .getElementById("btnNFC")
+    .addEventListener(
+      "click",
+      async () => {
+
+        const mensaje =
+          document.getElementById(
+            "mensajeNFC"
+          );
+
+
+        mensaje.textContent =
+          "📡 Buscando cargas pendientes...";
+
+
+        await new Promise(
+          (resolver) =>
+            setTimeout(
+              resolver,
+              1000
+            )
+        );
+
+
+        mensaje.textContent =
+          "ℹ️ La acreditación NFC simulada se conectará con el sistema de acreditación UQT.";
+
+      }
+    );
+
+
+  /* ==========================================
+     MOVIMIENTOS
+  =========================================== */
+
+  async function cargarMovimientos() {
+
+    const contenedor =
+      document.getElementById(
+        "movimientos"
+      );
+
+
+    contenedor.innerHTML = "";
+
+
+    try {
+
+      const referencia =
+        collection(
+          db,
+          "usuarios",
+          usuarioActual.uid,
+          "movimientos"
+        );
+
+
+      const consulta =
+        query(
+          referencia,
+          orderBy(
+            "fecha",
+            "desc"
+          )
+        );
+
+
+      const resultado =
+        await getDocs(
+          consulta
+        );
+
+
+      if (resultado.empty) {
+
+        contenedor.innerHTML =
+          '<div class="vacio">No hay movimientos.</div>';
 
         return;
 
       }
 
 
-      const ref =
+      resultado.forEach(
+        (documento) => {
+
+          const movimiento =
+            documento.data();
+
+
+          let claseMonto =
+            "";
+
+
+          let signo =
+            "";
+
+
+          if (
+            movimiento.tipo ===
+            "carga_acreditada"
+          ) {
+
+            claseMonto =
+              "positivo";
+
+            signo =
+              "+";
+
+          }
+
+
+          if (
+            movimiento.tipo ===
+            "viaje"
+          ) {
+
+            claseMonto =
+              "negativo";
+
+            signo =
+              "-";
+
+          }
+
+
+          const elemento =
+            document.createElement(
+              "div"
+            );
+
+
+          elemento.className =
+            "elemento";
+
+
+          elemento.innerHTML = `
+
+            <div>
+              <strong>
+                ${movimiento.descripcion || "Movimiento UQT"}
+              </strong>
+            </div>
+
+            <div class="monto ${claseMonto}">
+              ${signo}$${Number(movimiento.monto || 0).toLocaleString("es-AR")}
+            </div>
+
+          `;
+
+
+          contenedor.appendChild(
+            elemento
+          );
+
+        }
+      );
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      contenedor.innerHTML =
+        '<div class="vacio">No se pudieron cargar los movimientos.</div>';
+
+    }
+
+  }
+
+
+  /* ==========================================
+     CAMBIAR PAPEL UQT
+  =========================================== */
+
+  document
+    .getElementById("btnCambiar")
+    .addEventListener(
+      "click",
+      async () => {
+
+        if (!usuarioActual) {
+          return;
+        }
+
+
+        const confirmar =
+          confirm(
+            "¿Seguro que querés cambiar tu papel UQT?\n\nEl anterior quedará ANULADO."
+          );
+
+
+        if (!confirmar) {
+          return;
+        }
+
+
+        try {
+
+          const nuevoNumero =
+            generarNumeroUQT();
+
+
+          await updateDoc(
+            doc(
+              db,
+              "usuarios",
+              usuarioActual.uid
+            ),
+            {
+
+              numeroUQT:
+                nuevoNumero
+
+            }
+          );
+
+
+          await addDoc(
+            collection(
+              db,
+              "usuarios",
+              usuarioActual.uid,
+              "movimientos"
+            ),
+            {
+
+              tipo:
+                "papel_cambiado",
+
+              descripcion:
+                "Papel UQT reemplazado",
+
+              monto:
+                0,
+
+              fecha:
+                serverTimestamp()
+
+            }
+          );
+
+
+          datosUsuario.numeroUQT =
+            nuevoNumero;
+
+
+          mostrarPanel();
+
+
+          document
+            .getElementById(
+              "mensajeCambio"
+            )
+            .textContent =
+              "✅ Nuevo papel UQT generado.";
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          document
+            .getElementById(
+              "mensajeCambio"
+            )
+            .textContent =
+              "❌ No se pudo cambiar el papel.";
+
+        }
+
+      }
+    );
+
+
+  /* ==========================================
+     IMPRIMIR PAPEL
+  =========================================== */
+
+  document
+    .getElementById("btnImprimir")
+    .addEventListener(
+      "click",
+      () => {
+
+        window.print();
+
+      }
+    );
+
+
+  /* ==========================================
+     CERRAR SESIÓN
+  ========================================== */
+
+  document
+    .getElementById("btnLogout")
+    .addEventListener(
+      "click",
+      async () => {
+
+        await signOut(auth);
+
+      }
+    );
+
+
+  /* ==========================================
+     ESTADO DE AUTENTICACIÓN
+  ========================================== */
+
+  onAuthStateChanged(
+    auth,
+    async (user) => {
+
+      usuarioActual =
+        user;
+
+
+      if (!user) {
+
+        loginPanel.classList.remove(
+          "oculto"
+        );
+
+        perfilPanel.classList.add(
+          "oculto"
+        );
+
+        panelUsuario.classList.add(
+          "oculto"
+        );
+
+        return;
+
+      }
+
+
+      const referencia =
         doc(
           db,
           "usuarios",
           user.uid
         );
 
-      const snap =
-        await getDoc(ref);
+
+      const resultado =
+        await getDoc(
+          referencia
+        );
 
 
-      if (snap.exists()) {
+      if (resultado.exists()) {
+
+        datosUsuario =
+          resultado.data();
+
 
         mostrarPanel();
 
+
+        await cargarCargasPendientes();
+
+        await cargarMovimientos();
+
       } else {
 
-        loginPanel.classList.add("oculto");
+        loginPanel.classList.add(
+          "oculto"
+        );
 
-        perfilPanel.classList.remove("oculto");
+        panelUsuario.classList.add(
+          "oculto"
+        );
+
+        perfilPanel.classList.remove(
+          "oculto"
+        );
 
       }
 
     }
   );
+
+
+  /* ==========================================
+     ERRORES FIREBASE EN ESPAÑOL
+  =========================================== */
+
+  function traducirError(error) {
+
+    if (
+      error.code ===
+      "auth/email-already-in-use"
+    ) {
+      return "Ese correo ya está registrado.";
+
+    }
+
+    if (
+      error.code ===
+      "auth/invalid-email"
+    ) {
+      return "El correo no es válido.";
+
+    }
+
+    if (
+      error.code ===
+      "auth/weak-password"
+    ) {
+      return "La contraseña debe tener al menos 6 caracteres.";
+
+    }
+
+    if (
+      error.code ===
+      "auth/invalid-credential"
+    ) {
+      return "Correo o contraseña incorrectos.";
+
+    }
+
+    return "Ocurrió un error.";
+
+  }
 
 </script>
 
