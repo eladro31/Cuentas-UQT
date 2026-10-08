@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>UQT — Unión Quintana Turi</title>
+
+  <style>
+    :root {
+      --azul: #0877b9;
+      --verde: #55b94b;
+      --blanco: #ffffff;
+      --gris: #f2f4f5;
+      --texto: #1b1b1b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--gris);
+      color: var(--texto);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--azul);
+      color: white;
+      padding: 22px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 30px;
+    }
+
+    header p {
+      margin-top: 5px;
+      color: #e8f7ff;
+    }
+
+    main {
+      max-width: 450px;
+      margin: 35px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+    }
+
+    h2 {
+      color: var(--azul);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 10px;
+      background: var(--azul);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .registrarse {
+      background: var(--verde);
+    }
+
+    .mensaje {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>UQT</h1>
+    <p>Unión Quintana Turi</p>
+  </header>
+
+  <main>
+
+    <div class="card">
+
+      <h2>Iniciar sesión</h2>
+
+      <label for="email">Correo electrónico</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="tu@email.com"
+      >
+
+      <label for="password">Contraseña</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="••••••••"
+      >
+
+      <button id="btnLogin">
+        Iniciar sesión
+      </button>
+
+      <button
+        class="registrarse"
+        id="btnRegistro"
+      >
+        Crear cuenta UQT
+      </button>
+
+      <div
+        class="mensaje"
+        id="mensaje"
+      ></div>
+
+    </div>
+
+  </main>
+
+  <footer>
+    UQT — Unión Quintana Turi
+  </footer>
+
+
+  <!-- Firebase -->
+
+  <script type="module">
+
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword
+    }
+    from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+
+    // CONFIGURACIÓN FIREBASE
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBg_7VX2rSGrHtArYzA_cBvnGBXdfSeR5E",
+      authDomain: "uqtsystem.firebaseapp.com",
+      projectId: "uqtsystem",
+      storageBucket: "uqtsystem.firebasestorage.app",
+      messagingSenderId: "908611052778",
+      appId: "1:908611052778:web:97f32b8f5b64bad86aa393"
+    };
+
+
+    // INICIAR FIREBASE
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const mensaje = document.getElementById("mensaje");
+
+
+    // LOGIN
+
+    document
+      .getElementById("btnLogin")
+      .addEventListener("click", async () => {
+
+        mensaje.textContent = "Iniciando sesión...";
+
+        try {
+
+          await signInWithEmailAndPassword(
+            auth,
+            email.value,
+            password.value
+          );
+
+          mensaje.textContent =
+            "✅ Sesión iniciada correctamente.";
+
+        } catch (error) {
+
+          mensaje.textContent =
+            "❌ " + error.message;
+
+        }
+
+      });
+
+
+    // REGISTRO
+
+    document
+      .getElementById("btnRegistro")
+      .addEventListener("click", async () => {
+
+        mensaje.textContent = "Creando cuenta...";
+
+        try {
+
+          await createUserWithEmailAndPassword(
+            auth,
+            email.value,
+            password.value
+          );
+
+          mensaje.textContent =
+            "✅ Cuenta UQT creada correctamente.";
+
+        } catch (error) {
+
+          mensaje.textContent =
+            "❌ " + error.message;
+
+        }
+
+      });
+
+  </script>
+
+</body>
+</html>
