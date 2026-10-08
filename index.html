@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>UQT — Unión Quintana Turi v1.0 </title>
-
-  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>UQT — Unión Quintana Turi v1.1</title>  <style>
     :root {
       --azul: #0877b9;
       --azul-oscuro: #075b8d;
@@ -256,6 +251,55 @@
     }
 
     /* ==========================
+       QR DE PAGO
+    ========================== */
+
+    .pago-qr {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pago-qr img {
+      width: 240px;
+      height: 240px;
+      max-width: 100%;
+      image-rendering: pixelated;
+    }
+
+    .pago-monto {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--azul);
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .codigo-pago {
+      background: #f2f4f5;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      font-family: monospace;
+      font-weight: bold;
+      word-break: break-all;
+      margin-top: 10px;
+    }
+
+    .estado-pago {
+      text-align: center;
+      font-weight: bold;
+      color: var(--amarillo);
+      margin-top: 10px;
+    }
+
+    .aviso-unico {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    /* ==========================
        NFC
     ========================== */
 
@@ -274,326 +318,363 @@
       color: #777;
       padding: 25px;
     }
-  </style>
-</head>
-
-<body>
-
-<header>
+  </style></head><body><header>
   <h1>UQT</h1>
   <p>Unión Quintana Turi</p>
-</header>
-
-<main>
-
-  <!-- ==========================================
+</header><main>  <!-- ==========================================
        LOGIN / REGISTRO
-  =========================================== -->
+  =========================================== -->  <section id="loginPanel" class="card"><h2>Ingresar a UQT</h2>
 
-  <section id="loginPanel" class="card">
+<label for="email">
+  Correo electrónico
+</label>
 
-    <h2>Ingresar a UQT</h2>
+<input
+  type="email"
+  id="email"
+  placeholder="tu@email.com"
+  autocomplete="email"
+>
 
-    <label for="email">
-      Correo electrónico
-    </label>
+<label for="password">
+  Contraseña
+</label>
 
-    <input
-      type="email"
-      id="email"
-      placeholder="tu@email.com"
-      autocomplete="email"
-    >
+<input
+  type="password"
+  id="password"
+  placeholder="••••••••"
+  autocomplete="current-password"
+>
 
-    <label for="password">
-      Contraseña
-    </label>
+<button id="btnLogin">
+  Iniciar sesión
+</button>
 
-    <input
-      type="password"
-      id="password"
-      placeholder="••••••••"
-      autocomplete="current-password"
-    >
+<button
+  id="btnRegistro"
+  class="verde"
+>
+  Crear cuenta UQT
+</button>
 
-    <button id="btnLogin">
-      Iniciar sesión
-    </button>
+<button
+  id="btnGoogle"
+  class="google"
+>
+  🔵 Continuar con Google
+</button>
 
-    <button
-      id="btnRegistro"
-      class="verde"
-    >
-      Crear cuenta UQT
-    </button>
+<div
+  id="mensajeLogin"
+  class="mensaje"
+></div>
 
-    <button
-      id="btnGoogle"
-      class="google"
-    >
-      🔵 Continuar con Google
-    </button>
-
-    <div
-      id="mensajeLogin"
-      class="mensaje"
-    ></div>
-
-  </section>
-
-
-  <!-- ==========================================
+  </section>  <!-- ==========================================
        PERFIL
-  =========================================== -->
-
-  <section
+  =========================================== -->  <section
     id="perfilPanel"
     class="card oculto"
-  >
+  ><h2>Crear tu cuenta UQT</h2>
 
-    <h2>Crear tu cuenta UQT</h2>
+<p class="centrado">
+  Para terminar necesitamos tu nombre.
+</p>
 
-    <p class="centrado">
-      Para terminar necesitamos tu nombre.
-    </p>
+<label for="nombre">
+  Nombre y apellido
+</label>
 
-    <label for="nombre">
-      Nombre y apellido
-    </label>
+<input
+  type="text"
+  id="nombre"
+  placeholder="Ej: Adrián Turi"
+  autocomplete="name"
+>
 
-    <input
-      type="text"
-      id="nombre"
-      placeholder="Ej: Adrián Turi"
-      autocomplete="name"
-    >
+<button
+  id="btnCrearPerfil"
+  class="verde"
+>
+  Crear mi cuenta UQT
+</button>
 
-    <button
-      id="btnCrearPerfil"
-      class="verde"
-    >
-      Crear mi cuenta UQT
-    </button>
+<div
+  id="mensajePerfil"
+  class="mensaje"
+></div>
 
-    <div
-      id="mensajePerfil"
-      class="mensaje"
-    ></div>
-
-  </section>
-
-
-  <!-- ==========================================
+  </section>  <!-- ==========================================
        PANEL PRINCIPAL
-  =========================================== -->
-
-  <section
+  =========================================== -->  <section
     id="panelUsuario"
     class="oculto"
+  ><!-- PAPEL -->
+
+<div class="card">
+
+  <h2>Mi papel UQT</h2>
+
+  <div class="papel">
+
+    <div class="papel-logo">
+      UQT
+    </div>
+
+    <div class="papel-subtitulo">
+      UNIÓN QUINTANA TURI
+    </div>
+
+    <div
+      id="nombrePapel"
+      class="papel-nombre"
+    ></div>
+
+    <div
+      id="numeroUQT"
+      class="papel-numero"
+    ></div>
+
+    <div id="qr"></div>
+
+    <div class="papel-aviso">
+      Presentá este papel en los
+      marcadores UQT.
+    </div>
+
+  </div>
+
+  <button id="btnImprimir">
+    🖨️ Imprimir papel UQT
+  </button>
+
+</div>
+
+
+<!-- SALDO -->
+
+<div class="card">
+
+  <h2>Saldo actual</h2>
+
+  <div
+    id="saldo"
+    class="saldo"
   >
+    $0
+  </div>
 
-    <!-- PAPEL -->
+  <div class="limite">
+    Saldo negativo máximo: -$5.000
+  </div>
 
-    <div class="card">
-
-      <h2>Mi papel UQT</h2>
-
-      <div class="papel">
-
-        <div class="papel-logo">
-          UQT
-        </div>
-
-        <div class="papel-subtitulo">
-          UNIÓN QUINTANA TURI
-        </div>
-
-        <div
-          id="nombrePapel"
-          class="papel-nombre"
-        >
-        </div>
-
-        <div
-          id="numeroUQT"
-          class="papel-numero"
-        >
-        </div>
-
-        <div id="qr"></div>
-
-        <div class="papel-aviso">
-          Presentá este papel en los
-          marcadores UQT.
-        </div>
-
-      </div>
-
-      <button id="btnImprimir">
-        🖨️ Imprimir papel UQT
-      </button>
-
-    </div>
-
-
-    <!-- SALDO -->
-
-    <div class="card">
-
-      <h2>Saldo actual</h2>
-
-      <div
-        id="saldo"
-        class="saldo"
-      >
-        $0
-      </div>
-
-      <div class="limite">
-        Saldo negativo máximo: -$5.000
-      </div>
-
-    </div>
-
-
-    <!-- CARGAR SALDO -->
-
-    <div class="card">
-
-      <h2>Cargar saldo</h2>
-
-      <p class="centrado">
-        La carga quedará pendiente hasta
-        ser acreditada en un marcador UQT.
-      </p>
-
-      <label for="montoCarga">
-        Monto
-      </label>
-
-      <input
-        type="number"
-        id="montoCarga"
-        placeholder="Ej: 5000"
-        min="1"
-      >
-
-      <button
-        id="btnCarga"
-        class="verde"
-      >
-        Solicitar carga
-      </button>
-
-      <div
-        id="mensajeCarga"
-        class="mensaje"
-      ></div>
-
-    </div>
-
-
-    <!-- CARGAS PENDIENTES -->
-
-    <div class="card">
-
-      <h2>Cargas pendientes</h2>
-
-      <div id="cargasPendientes">
-        <div class="vacio">
-          Cargando...
-        </div>
-      </div>
-
-      <div class="nfc-icono">
-        📡
-      </div>
-
-      <button id="btnNFC">
-        Acreditar mediante NFC
-      </button>
-
-      <p class="centrado" style="margin-top:10px;color:#777;">
-        Esta función simula la acreditación NFC.
-      </p>
-
-      <div
-        id="mensajeNFC"
-        class="mensaje"
-      ></div>
-
-    </div>
-
-
-    <!-- MOVIMIENTOS -->
-
-    <div class="card">
-
-      <h2>Movimientos</h2>
-
-      <div id="movimientos">
-        <div class="vacio">
-          Cargando...
-        </div>
-      </div>
-
-    </div>
-
-
-    <!-- CAMBIAR PAPEL -->
-
-    <div class="card">
-
-      <h2>Cambiar papel UQT</h2>
-
-      <p>
-        Si perdiste o te robaron tu papel UQT,
-        podés generar uno nuevo.
-      </p>
-
-      <p style="margin-top:10px;">
-        El número y QR anteriores quedarán
-        anulados.
-      </p>
-
-      <button
-        id="btnCambiar"
-        class="rojo"
-      >
-        Cambiar papel UQT
-      </button>
-
-      <div
-        id="mensajeCambio"
-        class="mensaje"
-      ></div>
-
-    </div>
-
-
-    <!-- CERRAR SESIÓN -->
-
-    <button
-      id="btnLogout"
-      class="rojo"
-    >
-      Cerrar sesión
-    </button>
-
-  </section>
-
-</main>
-
-<footer>
-  UQT — Unión Quintana Turi
-</footer>
+</div>
 
 
 <!-- ==========================================
-     FIREBASE
+     QR DE PAGO
 =========================================== -->
 
-<script type="module">
+<div class="card">
+
+  <h2>QR de pago</h2>
+
+  <p class="centrado">
+    Generá un QR para pagar desde tu saldo.
+    El QR puede utilizarse una sola vez.
+  </p>
+
+  <label for="montoPago">
+    Monto a pagar
+  </label>
+
+  <input
+    type="number"
+    id="montoPago"
+    placeholder="Ej: 500"
+    min="1"
+    step="1"
+  >
+
+  <button
+    id="btnGenerarPago"
+    class="verde"
+  >
+    💳 Generar QR de pago
+  </button>
+
+  <div
+    id="qrPagoContenedor"
+    class="oculto"
+  >
+
+    <div class="pago-monto">
+      $<span id="montoPagoMostrar">0</span>
+    </div>
+
+    <div class="pago-qr">
+      <img
+        id="qrPago"
+        alt="QR de pago UQT"
+      >
+    </div>
+
+    <div
+      id="codigoPago"
+      class="codigo-pago"
+    ></div>
+
+    <div class="estado-pago">
+      ⏳ Pendiente de uso
+    </div>
+
+    <div class="aviso-unico">
+      Este QR es de un solo uso.
+      Una vez cobrado no podrá volver a utilizarse.
+    </div>
+
+  </div>
+
+  <div
+    id="mensajePago"
+    class="mensaje"
+  ></div>
+
+</div>
+
+
+<!-- CARGAR SALDO -->
+
+<div class="card">
+
+  <h2>Cargar saldo</h2>
+
+  <p class="centrado">
+    La carga quedará pendiente hasta
+    ser acreditada en un marcador UQT.
+  </p>
+
+  <label for="montoCarga">
+    Monto
+  </label>
+
+  <input
+    type="number"
+    id="montoCarga"
+    placeholder="Ej: 5000"
+    min="1"
+  >
+
+  <button
+    id="btnCarga"
+    class="verde"
+  >
+    Solicitar carga
+  </button>
+
+  <div
+    id="mensajeCarga"
+    class="mensaje"
+  ></div>
+
+</div>
+
+
+<!-- CARGAS PENDIENTES -->
+
+<div class="card">
+
+  <h2>Cargas pendientes</h2>
+
+  <div id="cargasPendientes">
+    <div class="vacio">
+      Cargando...
+    </div>
+  </div>
+
+  <div class="nfc-icono">
+    📡
+  </div>
+
+  <button id="btnNFC">
+    Acreditar mediante NFC
+  </button>
+
+  <p
+    class="centrado"
+    style="margin-top:10px;color:#777;"
+  >
+    Esta función simula la acreditación NFC.
+  </p>
+
+  <div
+    id="mensajeNFC"
+    class="mensaje"
+  ></div>
+
+</div>
+
+
+<!-- MOVIMIENTOS -->
+
+<div class="card">
+
+  <h2>Movimientos</h2>
+
+  <div id="movimientos">
+    <div class="vacio">
+      Cargando...
+    </div>
+  </div>
+
+</div>
+
+
+<!-- CAMBIAR PAPEL -->
+
+<div class="card">
+
+  <h2>Cambiar papel UQT</h2>
+
+  <p>
+    Si perdiste o te robaron tu papel UQT,
+    podés generar uno nuevo.
+  </p>
+
+  <p style="margin-top:10px;">
+    El número y QR anteriores quedarán
+    anulados.
+  </p>
+
+  <button
+    id="btnCambiar"
+    class="rojo"
+  >
+    Cambiar papel UQT
+  </button>
+
+  <div
+    id="mensajeCambio"
+    class="mensaje"
+  ></div>
+
+</div>
+
+
+<!-- CERRAR SESIÓN -->
+
+<button
+  id="btnLogout"
+  class="rojo"
+>
+  Cerrar sesión
+</button>
+
+  </section></main><footer>
+  UQT — Unión Quintana Turi
+</footer><!-- ==========================================
+     FIREBASE
+=========================================== --><script type="module">
 
   import {
     initializeApp
@@ -622,7 +703,6 @@
     collection,
     addDoc,
     query,
-    where,
     orderBy,
     getDocs,
     serverTimestamp
@@ -669,7 +749,7 @@
 
   /* ==========================================
      VARIABLES
-  =========================================== */
+  ========================================== */
 
   let usuarioActual = null;
   let datosUsuario = null;
@@ -677,7 +757,7 @@
 
   /* ==========================================
      ELEMENTOS
-  =========================================== */
+  ========================================== */
 
   const loginPanel =
     document.getElementById("loginPanel");
@@ -691,7 +771,7 @@
 
   /* ==========================================
      GENERAR NÚMERO UQT
-  =========================================== */
+  ========================================== */
 
   function generarNumeroUQT() {
 
@@ -707,8 +787,41 @@
 
 
   /* ==========================================
+     GENERAR CÓDIGO DE PAGO
+  ========================================== */
+
+  function generarCodigoPago() {
+
+    const caracteres =
+      "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    let codigo =
+      "UQTPAGO-";
+
+    for (
+      let i = 0;
+      i < 10;
+      i++
+    ) {
+
+      codigo +=
+        caracteres[
+          Math.floor(
+            Math.random() *
+            caracteres.length
+          )
+        ];
+
+    }
+
+    return codigo;
+
+  }
+
+
+  /* ==========================================
      LOGIN EMAIL
-  =========================================== */
+  ========================================== */
 
   document
     .getElementById("btnLogin")
@@ -765,7 +878,7 @@
 
   /* ==========================================
      REGISTRO EMAIL
-  =========================================== */
+  ========================================== */
 
   document
     .getElementById("btnRegistro")
@@ -822,7 +935,7 @@
 
   /* ==========================================
      GOOGLE
-  =========================================== */
+  ========================================== */
 
   document
     .getElementById("btnGoogle")
@@ -858,7 +971,7 @@
 
   /* ==========================================
      CREAR PERFIL
-  =========================================== */
+  ========================================== */
 
   document
     .getElementById("btnCrearPerfil")
@@ -970,7 +1083,7 @@
 
   /* ==========================================
      CARGAR DATOS DEL USUARIO
-  =========================================== */
+  ========================================== */
 
   async function cargarUsuario() {
 
@@ -1019,7 +1132,7 @@
 
   /* ==========================================
      MOSTRAR PANEL
-  =========================================== */
+  ========================================== */
 
   function mostrarPanel() {
 
@@ -1028,14 +1141,6 @@
     perfilPanel.classList.add("oculto");
 
     panelUsuario.classList.remove("oculto");
-
-
-    document
-      .getElementById("saludo")
-      .textContent =
-      "¡Hola, " +
-      datosUsuario.nombre +
-      "!";
 
 
     document
@@ -1064,7 +1169,7 @@
 
   /* ==========================================
      SALDO
-  =========================================== */
+  ========================================== */
 
   function actualizarSaldo(saldo) {
 
@@ -1073,7 +1178,9 @@
 
 
     elemento.textContent =
-      "$" + Number(saldo).toLocaleString("es-AR");
+      "$" +
+      Number(saldo)
+        .toLocaleString("es-AR");
 
 
     if (saldo < 0) {
@@ -1094,8 +1201,8 @@
 
 
   /* ==========================================
-     GENERAR QR
-  =========================================== */
+     GENERAR QR DEL PAPEL
+  ========================================== */
 
   function generarQR(texto) {
 
@@ -1114,14 +1221,6 @@
       "QR UQT";
 
 
-    /*
-      Por ahora usamos este generador
-      para probar el sistema.
-
-      Más adelante podemos reemplazarlo
-      por generación local del QR.
-    */
-
     imagen.src =
       "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
       +
@@ -1134,8 +1233,165 @@
 
 
   /* ==========================================
+     GENERAR QR DE PAGO
+  ========================================== */
+
+  document
+    .getElementById("btnGenerarPago")
+    .addEventListener(
+      "click",
+      async () => {
+
+        if (!usuarioActual) {
+          return;
+        }
+
+
+        const mensaje =
+          document.getElementById(
+            "mensajePago"
+          );
+
+
+        const monto =
+          Number(
+            document
+              .getElementById("montoPago")
+              .value
+          );
+
+
+        if (
+          !Number.isFinite(monto) ||
+          monto <= 0
+        ) {
+
+          mensaje.textContent =
+            "❌ Ingresá un monto válido.";
+
+          return;
+
+        }
+
+
+        if (
+          !Number.isInteger(monto)
+        ) {
+
+          mensaje.textContent =
+            "❌ El monto debe ser un número entero.";
+
+          return;
+
+        }
+
+
+        try {
+
+          const codigo =
+            generarCodigoPago();
+
+
+          /*
+            El QR contiene solamente
+            un identificador.
+
+            El marcador consultará
+            este código en Firebase.
+          */
+
+          await setDoc(
+            doc(
+              db,
+              "pagos",
+              codigo
+            ),
+            {
+
+              codigo:
+                codigo,
+
+              uid:
+                usuarioActual.uid,
+
+              numeroUQT:
+                datosUsuario.numeroUQT,
+
+              monto:
+                monto,
+
+              estado:
+                "pendiente",
+
+              creado:
+                serverTimestamp(),
+
+              usado:
+                false
+
+            }
+          );
+
+
+          const qrPago =
+            document.getElementById(
+              "qrPago"
+            );
+
+
+          qrPago.src =
+            "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data="
+            +
+            encodeURIComponent(codigo);
+
+
+          document
+            .getElementById(
+              "montoPagoMostrar"
+            )
+            .textContent =
+            monto.toLocaleString(
+              "es-AR"
+            );
+
+
+          document
+            .getElementById(
+              "codigoPago"
+            )
+            .textContent =
+            codigo;
+
+
+          document
+            .getElementById(
+              "qrPagoContenedor"
+            )
+            .classList.remove(
+              "oculto"
+            );
+
+
+          mensaje.textContent =
+            "✅ QR de pago generado.";
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          mensaje.textContent =
+            "❌ No se pudo generar el QR de pago.";
+
+        }
+
+      }
+    );
+
+
+  /* ==========================================
      SOLICITAR CARGA
-  =========================================== */
+  ========================================== */
 
   document
     .getElementById("btnCarga")
@@ -1249,7 +1505,7 @@
 
   /* ==========================================
      CARGAS PENDIENTES
-  =========================================== */
+  ========================================== */
 
   async function cargarCargasPendientes() {
 
@@ -1351,7 +1607,7 @@
 
   /* ==========================================
      NFC SIMULADO
-  =========================================== */
+  ========================================== */
 
   document
     .getElementById("btnNFC")
@@ -1387,7 +1643,7 @@
 
   /* ==========================================
      MOVIMIENTOS
-  =========================================== */
+  ========================================== */
 
   async function cargarMovimientos() {
 
@@ -1447,7 +1703,6 @@
           let claseMonto =
             "";
 
-
           let signo =
             "";
 
@@ -1469,6 +1724,20 @@
           if (
             movimiento.tipo ===
             "viaje"
+          ) {
+
+            claseMonto =
+              "negativo";
+
+            signo =
+              "-";
+
+          }
+
+
+          if (
+            movimiento.tipo ===
+            "pago_qr"
           ) {
 
             claseMonto =
@@ -1527,7 +1796,7 @@
 
   /* ==========================================
      CAMBIAR PAPEL UQT
-  =========================================== */
+  ========================================== */
 
   document
     .getElementById("btnCambiar")
@@ -1631,7 +1900,7 @@
 
   /* ==========================================
      IMPRIMIR PAPEL
-  =========================================== */
+  ========================================== */
 
   document
     .getElementById("btnImprimir")
@@ -1741,7 +2010,7 @@
 
   /* ==========================================
      ERRORES FIREBASE EN ESPAÑOL
-  =========================================== */
+  ========================================== */
 
   function traducirError(error) {
 
@@ -1781,7 +2050,5 @@
 
   }
 
-</script>
-
-</body>
+</script></body>
 </html>
