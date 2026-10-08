@@ -9,10 +9,12 @@
   <style>
     :root {
       --azul: #0877b9;
+      --azul-oscuro: #075b8d;
       --verde: #55b94b;
       --blanco: #ffffff;
       --gris: #f2f4f5;
-      --texto: #1b1b1b;
+      --texto: #202020;
+      --rojo: #d93025;
     }
 
     * {
@@ -36,31 +38,31 @@
     }
 
     header h1 {
-      font-size: 30px;
+      font-size: 32px;
     }
 
     header p {
       margin-top: 5px;
-      color: #e8f7ff;
     }
 
     main {
-      max-width: 450px;
-      margin: 35px auto;
-      padding: 20px;
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 15px;
     }
 
     .card {
       background: white;
+      padding: 25px;
       border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+      box-shadow: 0 5px 20px rgba(0,0,0,.10);
+      margin-bottom: 20px;
     }
 
     h2 {
       color: var(--azul);
-      margin-bottom: 20px;
       text-align: center;
+      margin-bottom: 20px;
     }
 
     label {
@@ -81,7 +83,7 @@
     button {
       width: 100%;
       padding: 14px;
-      margin-top: 20px;
+      margin-top: 15px;
       border: none;
       border-radius: 10px;
       background: var(--azul);
@@ -92,175 +94,743 @@
     }
 
     button:hover {
-      opacity: 0.9;
+      opacity: .9;
     }
 
-    .registrarse {
+    .verde {
       background: var(--verde);
     }
 
+    .google {
+      background: white;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+
+    .rojo {
+      background: var(--rojo);
+    }
+
     .mensaje {
-      margin-top: 15px;
       text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    /* PAPEL UQT */
+
+    .papel {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      border: 3px solid var(--azul);
+      text-align: center;
+    }
+
+    .papel h3 {
+      color: var(--azul);
+      font-size: 25px;
+    }
+
+    .papel .numero {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 12px 0;
+    }
+
+    #qr {
+      margin: 15px auto;
+      width: 200px;
+      height: 200px;
+    }
+
+    .saldo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: var(--verde);
+      margin: 15px 0;
+    }
+
+    .movimiento {
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .pendiente {
+      color: #d88900;
       font-weight: bold;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      color: #666;
+      color: #777;
+      padding: 25px;
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>UQT</h1>
-    <p>Unión Quintana Turi</p>
-  </header>
+<header>
+  <h1>UQT</h1>
+  <p>Unión Quintana Turi</p>
+</header>
 
-  <main>
+<main>
+
+  <!-- ========================= -->
+  <!-- LOGIN / REGISTRO -->
+  <!-- ========================= -->
+
+  <section id="loginPanel" class="card">
+
+    <h2>Ingresar a UQT</h2>
+
+    <label>Correo electrónico</label>
+    <input
+      type="email"
+      id="email"
+      placeholder="tu@email.com"
+    >
+
+    <label>Contraseña</label>
+    <input
+      type="password"
+      id="password"
+      placeholder="••••••••"
+    >
+
+    <button id="btnLogin">
+      Iniciar sesión
+    </button>
+
+    <button id="btnRegistro" class="verde">
+      Crear cuenta UQT
+    </button>
+
+    <button id="btnGoogle" class="google">
+      🔵 Continuar con Google
+    </button>
+
+    <div id="mensajeLogin" class="mensaje"></div>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- CREAR PERFIL -->
+  <!-- ========================= -->
+
+  <section id="perfilPanel" class="card oculto">
+
+    <h2>Crear tu cuenta UQT</h2>
+
+    <p style="text-align:center;">
+      Necesitamos tu nombre para crear tu papel UQT.
+    </p>
+
+    <label>Nombre y apellido</label>
+
+    <input
+      type="text"
+      id="nombre"
+      placeholder="Ej: Adrián Turi"
+    >
+
+    <button id="btnCrearPerfil" class="verde">
+      Crear mi cuenta UQT
+    </button>
+
+    <div id="mensajePerfil" class="mensaje"></div>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- PANEL DEL USUARIO -->
+  <!-- ========================= -->
+
+  <section id="panelUsuario" class="oculto">
 
     <div class="card">
 
-      <h2>Iniciar sesión</h2>
+      <h2 id="saludo">
+        ¡Hola!
+      </h2>
 
-      <label for="email">Correo electrónico</label>
-      <input
-        type="email"
-        id="email"
-        placeholder="tu@email.com"
-      >
+      <div class="papel">
 
-      <label for="password">Contraseña</label>
-      <input
-        type="password"
-        id="password"
-        placeholder="••••••••"
-      >
+        <h3>UQT</h3>
 
-      <button id="btnLogin">
-        Iniciar sesión
-      </button>
+        <p>
+          UNIÓN QUINTANA TURI
+        </p>
 
-      <button
-        class="registrarse"
-        id="btnRegistro"
-      >
-        Crear cuenta UQT
-      </button>
+        <p id="nombrePapel"></p>
 
-      <div
-        class="mensaje"
-        id="mensaje"
-      ></div>
+        <div class="numero" id="numeroUQT">
+          UQT-000000
+        </div>
+
+        <div id="qr"></div>
+
+        <p>
+          Presentá este papel en los
+          marcadores UQT.
+        </p>
+
+      </div>
 
     </div>
 
-  </main>
 
-  <footer>
-    UQT — Unión Quintana Turi
-  </footer>
+    <!-- SALDO -->
+
+    <div class="card">
+
+      <h2>Saldo actual</h2>
+
+      <div class="saldo" id="saldo">
+        $0
+      </div>
+
+      <p style="text-align:center;">
+        Saldo negativo máximo: -$5.000
+      </p>
+
+    </div>
 
 
-  <!-- Firebase -->
+    <!-- CARGAR -->
 
-  <script type="module">
+    <div class="card">
 
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+      <h2>Cargar saldo</h2>
 
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword
+      <label>Monto</label>
+
+      <input
+        type="number"
+        id="montoCarga"
+        placeholder="Ej: 5000"
+        min="1"
+      >
+
+      <button id="btnCarga" class="verde">
+        Solicitar carga
+      </button>
+
+      <div id="mensajeCarga" class="mensaje"></div>
+
+    </div>
+
+
+    <!-- CARGAS PENDIENTES -->
+
+    <div class="card">
+
+      <h2>Cargas pendientes</h2>
+
+      <div id="cargasPendientes">
+        No hay cargas pendientes.
+      </div>
+
+      <button id="btnNFC">
+        📡 Acreditar mediante NFC
+      </button>
+
+      <p style="text-align:center;margin-top:10px;color:#777;">
+        Simulación de acreditación NFC.
+      </p>
+
+    </div>
+
+
+    <!-- MOVIMIENTOS -->
+
+    <div class="card">
+
+      <h2>Movimientos</h2>
+
+      <div id="movimientos">
+        No hay movimientos.
+      </div>
+
+    </div>
+
+
+    <!-- CAMBIAR PAPEL -->
+
+    <div class="card">
+
+      <h2>Cambiar papel UQT</h2>
+
+      <p>
+        Si perdiste o te robaron tu papel UQT,
+        podés generar uno nuevo.
+      </p>
+
+      <p style="margin-top:10px;">
+        El número y QR anteriores quedarán
+        anulados.
+      </p>
+
+      <button id="btnCambiar" class="rojo">
+        Cambiar papel UQT
+      </button>
+
+      <div id="mensajeCambio" class="mensaje"></div>
+
+    </div>
+
+
+    <!-- CERRAR SESIÓN -->
+
+    <button id="btnLogout" class="rojo">
+      Cerrar sesión
+    </button>
+
+  </section>
+
+</main>
+
+<footer>
+  UQT — Unión Quintana Turi
+</footer>
+
+
+<!-- ========================= -->
+<!-- FIREBASE -->
+<!-- ========================= -->
+
+<script type="module">
+
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged,
+    signOut
+  } from
+    "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc,
+    updateDoc,
+    collection,
+    addDoc,
+    query,
+    where,
+    getDocs,
+    orderBy
+  } from
+    "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+
+  /* ========================= */
+  /* CONFIGURACIÓN */
+  /* ========================= */
+
+  const firebaseConfig = {
+
+    apiKey:
+      "AIzaSyBg_7VX2rSGrHtArYzA_cBvnGBXdfSeR5E",
+
+    authDomain:
+      "uqtsystem.firebaseapp.com",
+
+    projectId:
+      "uqtsystem",
+
+    storageBucket:
+      "uqtsystem.firebasestorage.app",
+
+    messagingSenderId:
+      "908611052778",
+
+    appId:
+      "1:908611052778:web:97f32b8f5b64bad86aa393"
+
+  };
+
+
+  const app = initializeApp(firebaseConfig);
+
+  const auth = getAuth(app);
+
+  const db = getFirestore(app);
+
+
+  /* ========================= */
+  /* ELEMENTOS */
+  /* ========================= */
+
+  const loginPanel =
+    document.getElementById("loginPanel");
+
+  const perfilPanel =
+    document.getElementById("perfilPanel");
+
+  const panelUsuario =
+    document.getElementById("panelUsuario");
+
+
+  let usuarioActual = null;
+
+
+  /* ========================= */
+  /* GENERAR NÚMERO UQT */
+  /* ========================= */
+
+  function generarNumeroUQT() {
+
+    const numero =
+      Math.floor(
+        100000 +
+        Math.random() * 900000
+      );
+
+    return "UQT-" + numero;
+
+  }
+
+
+  /* ========================= */
+  /* LOGIN */
+  /* ========================= */
+
+  document
+    .getElementById("btnLogin")
+    .addEventListener("click", async () => {
+
+      const email =
+        document.getElementById("email").value;
+
+      const password =
+        document.getElementById("password").value;
+
+      try {
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+      } catch (error) {
+
+        document.getElementById(
+          "mensajeLogin"
+        ).textContent =
+          "❌ " + error.message;
+
+      }
+
+    });
+
+
+  /* ========================= */
+  /* REGISTRO */
+  /* ========================= */
+
+  document
+    .getElementById("btnRegistro")
+    .addEventListener("click", async () => {
+
+      const email =
+        document.getElementById("email").value;
+
+      const password =
+        document.getElementById("password").value;
+
+      try {
+
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        loginPanel.classList.add("oculto");
+
+        perfilPanel.classList.remove("oculto");
+
+      } catch (error) {
+
+        document.getElementById(
+          "mensajeLogin"
+        ).textContent =
+          "❌ " + error.message;
+
+      }
+
+    });
+
+
+  /* ========================= */
+  /* GOOGLE */
+  /* ========================= */
+
+  document
+    .getElementById("btnGoogle")
+    .addEventListener("click", async () => {
+
+      const provider =
+        new GoogleAuthProvider();
+
+      try {
+
+        await signInWithPopup(
+          auth,
+          provider
+        );
+
+      } catch (error) {
+
+        document.getElementById(
+          "mensajeLogin"
+        ).textContent =
+          "❌ " + error.message;
+
+      }
+
+    });
+
+
+  /* ========================= */
+  /* CREAR PERFIL */
+  /* ========================= */
+
+  document
+    .getElementById("btnCrearPerfil")
+    .addEventListener("click", async () => {
+
+      const nombre =
+        document.getElementById("nombre").value.trim();
+
+      if (!nombre) {
+
+        document.getElementById(
+          "mensajePerfil"
+        ).textContent =
+          "❌ Escribí tu nombre.";
+
+        return;
+
+      }
+
+      if (!usuarioActual) return;
+
+
+      const numeroUQT =
+        generarNumeroUQT();
+
+
+      await setDoc(
+        doc(
+          db,
+          "usuarios",
+          usuarioActual.uid
+        ),
+        {
+
+          nombre: nombre,
+
+          email:
+            usuarioActual.email,
+
+          numeroUQT:
+            numeroUQT,
+
+          saldo: 0,
+
+          tarjetaActiva: true,
+
+          creado:
+            new Date()
+
+        }
+      );
+
+
+      mostrarPanel();
+
+    });
+
+
+  /* ========================= */
+  /* MOSTRAR PANEL */
+  /* ========================= */
+
+  async function mostrarPanel() {
+
+    const ref =
+      doc(
+        db,
+        "usuarios",
+        usuarioActual.uid
+      );
+
+    const snap =
+      await getDoc(ref);
+
+
+    if (!snap.exists()) {
+
+      loginPanel.classList.add("oculto");
+
+      perfilPanel.classList.remove("oculto");
+
+      return;
+
     }
-    from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
 
 
-    // CONFIGURACIÓN FIREBASE
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBg_7VX2rSGrHtArYzA_cBvnGBXdfSeR5E",
-      authDomain: "uqtsystem.firebaseapp.com",
-      projectId: "uqtsystem",
-      storageBucket: "uqtsystem.firebasestorage.app",
-      messagingSenderId: "908611052778",
-      appId: "1:908611052778:web:97f32b8f5b64bad86aa393"
-    };
+    const datos =
+      snap.data();
 
 
-    // INICIAR FIREBASE
+    loginPanel.classList.add("oculto");
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    perfilPanel.classList.add("oculto");
 
-
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const mensaje = document.getElementById("mensaje");
+    panelUsuario.classList.remove("oculto");
 
 
-    // LOGIN
-
-    document
-      .getElementById("btnLogin")
-      .addEventListener("click", async () => {
-
-        mensaje.textContent = "Iniciando sesión...";
-
-        try {
-
-          await signInWithEmailAndPassword(
-            auth,
-            email.value,
-            password.value
-          );
-
-          mensaje.textContent =
-            "✅ Sesión iniciada correctamente.";
-
-        } catch (error) {
-
-          mensaje.textContent =
-            "❌ " + error.message;
-
-        }
-
-      });
+    document.getElementById(
+      "saludo"
+    ).textContent =
+      "¡Hola, " + datos.nombre + "!";
 
 
-    // REGISTRO
+    document.getElementById(
+      "nombrePapel"
+    ).textContent =
+      datos.nombre;
 
-    document
-      .getElementById("btnRegistro")
-      .addEventListener("click", async () => {
 
-        mensaje.textContent = "Creando cuenta...";
+    document.getElementById(
+      "numeroUQT"
+    ).textContent =
+      datos.numeroUQT;
 
-        try {
 
-          await createUserWithEmailAndPassword(
-            auth,
-            email.value,
-            password.value
-          );
+    document.getElementById(
+      "saldo"
+    ).textContent =
+      "$" + datos.saldo;
 
-          mensaje.textContent =
-            "✅ Cuenta UQT creada correctamente.";
 
-        } catch (error) {
+    generarQR(
+      datos.numeroUQT
+    );
 
-          mensaje.textContent =
-            "❌ " + error.message;
+  }
 
-        }
 
-      });
+  /* ========================= */
+  /* QR */
+  /* ========================= */
 
-  </script>
+  function generarQR(texto) {
+
+    const qr =
+      document.getElementById("qr");
+
+    qr.innerHTML = "";
+
+    const imagen =
+      document.createElement("img");
+
+    imagen.src =
+      "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="
+      + encodeURIComponent(texto);
+
+    imagen.width = 200;
+
+    imagen.height = 200;
+
+    qr.appendChild(imagen);
+
+  }
+
+
+  /* ========================= */
+  /* CERRAR SESIÓN */
+  /* ========================= */
+
+  document
+    .getElementById("btnLogout")
+    .addEventListener("click", async () => {
+
+      await signOut(auth);
+
+    });
+
+
+  /* ========================= */
+  /* CONTROL DE SESIÓN */
+  /* ========================= */
+
+  onAuthStateChanged(
+    auth,
+    async (user) => {
+
+      usuarioActual = user;
+
+      if (!user) {
+
+        loginPanel.classList.remove("oculto");
+
+        perfilPanel.classList.add("oculto");
+
+        panelUsuario.classList.add("oculto");
+
+        return;
+
+      }
+
+
+      const ref =
+        doc(
+          db,
+          "usuarios",
+          user.uid
+        );
+
+      const snap =
+        await getDoc(ref);
+
+
+      if (snap.exists()) {
+
+        mostrarPanel();
+
+      } else {
+
+        loginPanel.classList.add("oculto");
+
+        perfilPanel.classList.remove("oculto");
+
+      }
+
+    }
+  );
+
+</script>
 
 </body>
 </html>
