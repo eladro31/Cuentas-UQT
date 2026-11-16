@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0877b9">
+  <title>UQT — Unión Quintana Turi</title>
+  <style>
+    :root {
+      --blue:#0877b9; --blue-dark:#075b8d; --green:#55b94b;
+      --bg:#f3f6f8; --text:#17212b; --muted:#687783;
+      --red:#d93025; --amber:#b77900; --line:#e5ebef;
+      --white:#fff; --shadow:0 8px 28px rgba(20,48,66,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+    header{background:linear-gradient(125deg,var(--blue-dark),var(--blue));color:white;padding:22px 16px 26px;text-align:center}
+    header .brand{font-size:30px;font-weight:900;letter-spacing:2px}
+    header p{margin:5px 0 0;opacity:.92}
+    main{width:min(100% - 24px,620px);margin:22px auto 36px}
+    .card{background:var(--white);border-radius:18px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow)}
+    h2{font-size:20px;color:var(--blue-dark);margin:0 0 17px}
+    h3{font-size:16px;margin:0 0 8px}
+    p{line-height:1.5}
+    .muted{color:var(--muted);font-size:14px}
+    label{display:block;font-weight:700;font-size:14px;margin:14px 0 7px}
+    input{width:100%;padding:14px;border:1px solid #ccd6dd;border-radius:11px;font-size:16px;background:#fff;color:var(--text)}
+    input:focus{outline:2px solid rgba(8,119,185,.18);border-color:var(--blue)}
+    button{width:100%;border:0;border-radius:11px;padding:14px 16px;margin-top:12px;background:var(--blue);color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+    button:disabled{opacity:.55;cursor:not-allowed}
+    button:hover:not(:disabled){filter:brightness(.96)}
+    .green{background:var(--green);color:#092b08}
+    .google{background:#fff;color:#28323a;border:1px solid #d5dde2}
+    .danger{background:var(--red)}
+    .secondary{background:#edf3f6;color:#24404f}
+    .hidden{display:none!important}
+    .message{min-height:20px;text-align:center;font-weight:700;font-size:14px;margin-top:12px;line-height:1.4}
+    .center{text-align:center}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .paper{border:3px solid var(--blue);border-radius:16px;padding:20px;text-align:center;background:#fff}
+    .paper-logo{font-size:30px;font-weight:900;letter-spacing:1px;color:var(--blue)}
+    .paper-sub{font-size:12px;letter-spacing:.6px;font-weight:800;color:var(--green);margin-top:3px}
+    .paper-name{font-size:21px;font-weight:800;margin-top:18px;overflow-wrap:anywhere}
+    .paper-number{font-size:17px;font-weight:800;color:var(--blue);margin-top:7px}
+    #personalQr{display:flex;justify-content:center;margin:18px auto 10px}
+    #personalQr img{width:190px;height:190px;max-width:100%}
+    .paper-note{font-size:12px;color:var(--muted)}
+    .balance{font-size:38px;font-weight:900;text-align:center;color:var(--green);margin:8px 0}
+    .balance.negative{color:var(--red)}
+    .limit{text-align:center;color:var(--muted);font-size:13px}
+    .list-item{padding:13px 0;border-bottom:1px solid var(--line)}
+    .list-item:last-child{border-bottom:0}
+    .amount{font-weight:800;margin-top:5px}
+    .positive{color:#258b35}.negative-text{color:var(--red)}.pending{color:var(--amber)}
+    .empty{text-align:center;color:var(--muted);padding:12px 0;font-size:14px}
+    .pay-qr{text-align:center;margin-top:15px}
+    .pay-qr img{width:230px;height:230px;max-width:100%}
+    .pay-amount{text-align:center;font-size:30px;font-weight:900;color:var(--blue);margin:12px}
+    .code{background:#f0f4f6;border-radius:9px;padding:11px;text-align:center;font:700 13px monospace;overflow-wrap:anywhere}
+    .status{text-align:center;font-weight:700;color:var(--amber);margin-top:10px}
+    .nfc{font-size:48px;text-align:center;margin:10px}
+    footer{text-align:center;color:var(--muted);font-size:13px;padding:10px 20px 28px}
+    .topline{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
+    .topline span{font-size:13px;color:var(--muted)}
+    .small-btn{width:auto;margin:0;padding:9px 12px;font-size:13px}
+    @media(min-width:560px){main{margin-top:28px}.card{padding:25px}}
+    @media print{
+      body{background:#fff}
+      header,footer,#loginPanel,#profilePanel,.no-print,#balanceCard,#paymentCard,#loadCard,#pendingCard,#historyCard,#logoutButton{display:none!important}
+      main{width:100%;margin:0;padding:0}
+      #userPanel{display:block!important}
+      #paperCard{display:block!important;box-shadow:none;padding:0}
+      #paperCard h2{display:none}
+      .paper{max-width:390px;margin:20px auto;border:2px solid #0877b9}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">UQT</div>
+    <p>Unión Quintana Turi · Sistema de pasajeros</p>
+  </header>
+
+  <main>
+    <section id="loginPanel" class="card">
+      <h2 class="center">Ingresar a UQT</h2>
+      <label for="email">Correo electrónico</label>
+      <input id="email" type="email" placeholder="tu@email.com" autocomplete="email">
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" placeholder="Tu contraseña" autocomplete="current-password">
+      <button id="loginButton">Iniciar sesión</button>
+      <button id="registerButton" class="green">Crear cuenta UQT</button>
+      <button id="googleButton" class="google">🔵 Continuar con Google</button>
+      <div id="loginMessage" class="message" role="status"></div>
+    </section>
+
+    <section id="profilePanel" class="card hidden">
+      <h2 class="center">Terminemos tu cuenta UQT</h2>
+      <p class="center muted">Necesitamos tu nombre y apellido para crear tu papel de pasajero.</p>
+      <label for="fullName">Nombre y apellido</label>
+      <input id="fullName" type="text" maxlength="80" placeholder="Ej: Adrián Turi" autocomplete="name">
+      <button id="createProfileButton" class="green">Crear mi cuenta UQT</button>
+      <div id="profileMessage" class="message" role="status"></div>
+    </section>
+
+    <section id="userPanel" class="hidden">
+      <div class="topline no-print">
+        <div><strong id="welcomeName">Hola</strong><br><span>Tu cuenta de pasajero</span></div>
+        <button id="logoutButton" class="danger small-btn">Salir</button>
+      </div>
+
+      <section id="paperCard" class="card">
+        <h2 class="center">Mi papel UQT</h2>
+        <div class="paper">
+          <div class="paper-logo">UQT</div>
+          <div class="paper-sub">UNIÓN QUINTANA TURI</div>
+          <div id="paperName" class="paper-name"></div>
+          <div id="paperNumber" class="paper-number"></div>
+          <div id="personalQr"></div>
+          <div class="paper-note">Presentá este papel en los marcadores UQT.</div>
+        </div>
+        <button id="printButton" class="no-print">🖨️ Imprimir papel UQT</button>
+      </section>
+
+      <section id="balanceCard" class="card">
+        <h2 class="center">Saldo actual</h2>
+        <div id="balance" class="balance">$0</div>
+        <div class="limit">Saldo negativo máximo: -$5.000</div>
+      </section>
+
+      <section id="paymentCard" class="card">
+        <h2>QR de pago</h2>
+        <p class="muted">Generá un código para pagar desde tu saldo. El marcador UQT debe validarlo y consumirlo una sola vez.</p>
+        <label for="paymentAmount">Monto a pagar</label>
+        <input id="paymentAmount" type="number" min="1" step="1" inputmode="numeric" placeholder="Ej: 500">
+        <button id="generatePaymentButton" class="green">💳 Generar QR de pago</button>
+        <div id="paymentResult" class="hidden">
+          <div id="paymentAmountLabel" class="pay-amount"></div>
+          <div class="pay-qr"><img id="paymentQr" alt="QR de pago UQT"></div>
+          <div id="paymentCode" class="code"></div>
+          <div id="paymentStatus" class="status">⏳ Pendiente de uso</div>
+          <p class="muted center">Este código es de un solo uso. No compartas una captura después de utilizarlo.</p>
+        </div>
+        <div id="paymentMessage" class="message" role="status"></div>
+      </section>
+
+      <section id="loadCard" class="card">
+        <h2>Cargar saldo</h2>
+        <p class="muted">La solicitud quedará pendiente hasta que sea acreditada por un marcador UQT autorizado.</p>
+        <label for="loadAmount">Monto a cargar</label>
+        <input id="loadAmount" type="number" min="1" step="1" inputmode="numeric" placeholder="Ej: 5000">
+        <button id="requestLoadButton" class="green">Solicitar carga</button>
+        <div id="loadMessage" class="message" role="status"></div>
+      </section>
+
+      <section id="pendingCard" class="card">
+        <h2>Cargas pendientes</h2>
+        <div id="pendingLoads"><div class="empty">Cargando...</div></div>
+        <div class="nfc">📡</div>
+        <button id="nfcButton" class="secondary">Acreditar mediante NFC</button>
+        <p class="muted center">Simulación: todavía no acredita dinero ni modifica tu saldo.</p>
+        <div id="nfcMessage" class="message" role="status"></div>
+      </section>
+
+      <section id="historyCard" class="card">
+        <div class="row"><h2 style="margin:0">Movimientos</h2><button id="refreshButton" class="secondary small-btn">Actualizar</button></div>
+        <div id="movementList"><div class="empty">Cargando...</div></div>
+      </section>
+
+      <section class="card no-print">
+        <h2>Cambiar papel UQT</h2>
+        <p class="muted">Si perdiste tu papel, podés solicitar otro. El número anterior dejará de ser el identificador vigente cuando el marcador consulte el registro actualizado.</p>
+        <button id="replaceCardButton" class="danger">Cambiar papel UQT</button>
+        <div id="replaceMessage" class="message" role="status"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer>UQT — Unión Quintana Turi · Cuentas 2.0</footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+    import {
+      getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+      GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+    import {
+      getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
+      query, orderBy, getDocs, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+    // Proyecto Firebase existente: uqtsystem. No crear otro proyecto.
+    const firebaseConfig = {
+      apiKey: "AIzaSyBg_7VX2rSGrHtArYzA_cBvnGBXdfSeR5E",
+      authDomain: "uqtsystem.firebaseapp.com",
+      projectId: "uqtsystem",
+      storageBucket: "uqtsystem.firebasestorage.app",
+      messagingSenderId: "908611052778",
+      appId: "1:908611052778:web:97f32b8f5b64bad86aa393"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const $ = (id) => document.getElementById(id);
+
+    let currentUser = null;
+    let userData = null;
+    let busy = false;
+
+    const panels = ["loginPanel", "profilePanel", "userPanel"];
+    function showPanel(id) {
+      panels.forEach(panel => $(panel).classList.toggle("hidden", panel !== id));
+    }
+    function message(id, text, error = false) {
+      const el = $(id);
+      el.textContent = text;
+      el.style.color = error ? "#d93025" : "#25823a";
+    }
+    function formatMoney(value) {
+      return "$" + Number(value || 0).toLocaleString("es-AR");
+    }
+    function validAmount(value) {
+      const n = Number(value);
+      return Number.isSafeInteger(n) && n > 0;
+    }
+    function generatePassengerNumber() {
+      const bytes = new Uint32Array(1);
+      crypto.getRandomValues(bytes);
+      return "UQT-" + String(100000 + (bytes[0] % 900000));
+    }
+    function generatePaymentCode() {
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      const bytes = new Uint8Array(16);
+      crypto.getRandomValues(bytes);
+      return "UQTPAGO-" + Array.from(bytes, b => chars[b % chars.length]).join("");
+    }
+    function qrUrl(value, size = 300) {
+      return "https://api.qrserver.com/v1/create-qr-code/?size=" + size + "x" + size + "&data=" + encodeURIComponent(value);
+    }
+    function renderQr(containerId, value, size = 300) {
+      const container = $(containerId);
+      container.replaceChildren();
+      const img = document.createElement("img");
+      img.alt = "Código QR UQT";
+      img.width = size;
+      img.height = size;
+      img.src = qrUrl(value, size);
+      container.appendChild(img);
+    }
+    function renderBalance(value) {
+      const balance = Number(value || 0);
+      $("balance").textContent = formatMoney(balance);
+      $("balance").classList.toggle("negative", balance < 0);
+    }
+    function renderUser() {
+      $("welcomeName").textContent = "Hola, " + (userData.nombre || "pasajero");
+      $("paperName").textContent = userData.nombre || "";
+      $("paperNumber").textContent = userData.numeroUQT || "Sin número asignado";
+      renderBalance(userData.saldo);
+      if (userData.numeroUQT) renderQr("personalQr", userData.numeroUQT, 300);
+      showPanel("userPanel");
+    }
+    function translateError(error) {
+      const code = error?.code || "";
+      const errors = {
+        "auth/invalid-email": "El correo no tiene un formato válido.",
+        "auth/invalid-credential": "Correo o contraseña incorrectos.",
+        "auth/email-already-in-use": "Ese correo ya tiene una cuenta.",
+        "auth/weak-password": "La contraseña debe tener al menos 6 caracteres.",
+        "auth/operation-not-allowed": "Ese método de acceso no está habilitado en Firebase.",
+        "auth/unauthorized-domain": "Este dominio de GitHub Pages no está autorizado en Firebase.",
+        "auth/popup-blocked": "El navegador bloqueó la ventana de Google. Permití las ventanas emergentes e intentá otra vez.",
+        "auth/popup-closed-by-user": "Se cerró la ventana de Google antes de terminar.",
+        "auth/network-request-failed": "No se pudo conectar. Revisá tu conexión.",
+        "permission-denied": "Firebase rechazó el acceso. Hay que revisar las reglas de Firestore."
+      };
+      return errors[code] || ("Ocurrió un error (" + (code || "desconocido") + ").");
+    }
+    async function withButton(buttonId, task) {
+      if (busy) return;
+      busy = true;
+      const button = $(buttonId);
+      const oldText = button.textContent;
+      button.disabled = true;
+      button.textContent = "Procesando...";
+      try { await task(); }
+      finally {
+        button.disabled = false;
+        button.textContent = oldText;
+        busy = false;
+      }
+    }
+
+    $("loginButton").addEventListener("click", () => withButton("loginButton", async () => {
+      const email = $("email").value.trim();
+      const password = $("password").value;
+      if (!email || !password) return message("loginMessage", "Completá correo y contraseña.", true);
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        message("loginMessage", "");
+      } catch (error) {
+        console.error("LOGIN:", error);
+        message("loginMessage", translateError(error), true);
+      }
+    }));
+
+    $("registerButton").addEventListener("click", () => withButton("registerButton", async () => {
+      const email = $("email").value.trim();
+      const password = $("password").value;
+      if (!email || !password) return message("loginMessage", "Completá correo y contraseña.", true);
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        message("loginMessage", "Cuenta creada. Ahora completá tu perfil.");
+      } catch (error) {
+        console.error("REGISTRO:", error);
+        message("loginMessage", translateError(error), true);
+      }
+    }));
+
+    $("googleButton").addEventListener("click", () => withButton("googleButton", async () => {
+      try {
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: "select_account" });
+        await signInWithPopup(auth, provider);
+      } catch (error) {
+        console.error("GOOGLE:", error);
+        message("loginMessage", translateError(error), true);
+      }
+    }));
+
+    $("createProfileButton").addEventListener("click", () => withButton("createProfileButton", async () => {
+      if (!currentUser) return;
+      const name = $("fullName").value.trim();
+      if (name.length < 2) return message("profileMessage", "Escribí tu nombre y apellido.", true);
+      try {
+        const userRef = doc(db, "usuarios", currentUser.uid);
+        const existing = await getDoc(userRef);
+        if (existing.exists()) {
+          userData = existing.data();
+        } else {
+          userData = {
+            nombre: name,
+            email: currentUser.email || "",
+            numeroUQT: generatePassengerNumber(),
+            saldo: 0,
+            tarjetaActiva: true,
+            creado: serverTimestamp()
+          };
+          await setDoc(userRef, userData);
+          await addDoc(collection(db, "usuarios", currentUser.uid, "movimientos"), {
+            tipo: "cuenta_creada",
+            descripcion: "Cuenta UQT creada",
+            monto: 0,
+            fecha: serverTimestamp()
+          });
+        }
+        await loadAccount();
+      } catch (error) {
+        console.error("PERFIL:", error);
+        message("profileMessage", translateError(error), true);
+      }
+    }));
+
+    async function loadAccount() {
+      if (!currentUser) return;
+      const snapshot = await getDoc(doc(db, "usuarios", currentUser.uid));
+      if (!snapshot.exists()) {
+        showPanel("profilePanel");
+        return;
+      }
+      userData = snapshot.data();
+      renderUser();
+      await Promise.all([loadPendingLoads(), loadMovements()]);
+    }
+
+    async function loadPendingLoads() {
+      const container = $("pendingLoads");
+      container.replaceChildren();
+      try {
+        const ref = collection(db, "usuarios", currentUser.uid, "cargas");
+        const result = await getDocs(ref);
+        let count = 0;
+        result.forEach(item => {
+          const load = item.data();
+          if (load.estado !== "pendiente") return;
+          count++;
+          const row = document.createElement("div");
+          row.className = "list-item";
+          const title = document.createElement("strong");
+          title.textContent = "Carga pendiente";
+          const amount = document.createElement("div");
+          amount.className = "amount pending";
+          amount.textContent = "+" + formatMoney(load.monto);
+          const status = document.createElement("div");
+          status.className = "muted";
+          status.textContent = "Esperando acreditación";
+          row.append(title, amount, status);
+          container.appendChild(row);
+        });
+        if (!count) container.innerHTML = '<div class="empty">No hay cargas pendientes.</div>';
+      } catch (error) {
+        console.error("CARGAS:", error);
+        container.innerHTML = '<div class="empty">No se pudieron cargar las solicitudes.</div>';
+      }
+    }
+
+    async function loadMovements() {
+      const container = $("movementList");
+      container.replaceChildren();
+      try {
+        const ref = collection(db, "usuarios", currentUser.uid, "movimientos");
+        const result = await getDocs(query(ref, orderBy("fecha", "desc")));
+        if (result.empty) {
+          container.innerHTML = '<div class="empty">Todavía no hay movimientos.</div>';
+          return;
+        }
+        result.forEach(item => {
+          const movement = item.data();
+          const row = document.createElement("div");
+          row.className = "list-item";
+          const title = document.createElement("strong");
+          title.textContent = movement.descripcion || "Movimiento UQT";
+          const amount = document.createElement("div");
+          const type = movement.tipo || "";
+          const positive = type === "carga_acreditada";
+          const negative = type === "viaje" || type === "pago_qr";
+          amount.className = "amount " + (positive ? "positive" : negative ? "negative-text" : "");
+          const sign = positive ? "+" : negative ? "-" : "";
+          amount.textContent = sign + formatMoney(movement.monto);
+          row.append(title, amount);
+          container.appendChild(row);
+        });
+      } catch (error) {
+        console.error("MOVIMIENTOS:", error);
+        container.innerHTML = '<div class="empty">No se pudo cargar el historial.</div>';
+      }
+    }
+
+    $("generatePaymentButton").addEventListener("click", () => withButton("generatePaymentButton", async () => {
+      const amount = Number($("paymentAmount").value);
+      if (!validAmount(amount)) return message("paymentMessage", "Ingresá un monto entero mayor que cero.", true);
+      if (!userData?.numeroUQT) return message("paymentMessage", "No encontramos tu papel UQT.", true);
+      try {
+        const code = generatePaymentCode();
+        // El marcador debe validar el pago y descontar el saldo de forma transaccional y segura.
+        await setDoc(doc(db, "pagos", code), {
+          codigo: code,
+          uid: currentUser.uid,
+          numeroUQT: userData.numeroUQT,
+          monto: amount,
+          estado: "pendiente",
+          creado: serverTimestamp(),
+          usado: false
+        });
+        $("paymentAmountLabel").textContent = formatMoney(amount);
+        $("paymentCode").textContent = code;
+        $("paymentQr").src = qrUrl(code, 400);
+        $("paymentResult").classList.remove("hidden");
+        message("paymentMessage", "QR generado. Todavía no se realizó ningún cobro.");
+      } catch (error) {
+        console.error("PAGO:", error);
+        message("paymentMessage", translateError(error), true);
+      }
+    }));
+
+    $("requestLoadButton").addEventListener("click", () => withButton("requestLoadButton", async () => {
+      const amount = Number($("loadAmount").value);
+      if (!validAmount(amount)) return message("loadMessage", "Ingresá un monto entero mayor que cero.", true);
+      try {
+        await addDoc(collection(db, "usuarios", currentUser.uid, "cargas"), {
+          monto: amount, estado: "pendiente", creada: serverTimestamp()
+        });
+        await addDoc(collection(db, "usuarios", currentUser.uid, "movimientos"), {
+          tipo: "carga_solicitada", descripcion: "Carga pendiente", monto: amount, fecha: serverTimestamp()
+        });
+        $("loadAmount").value = "";
+        message("loadMessage", "Solicitud registrada. Queda pendiente de acreditación.");
+        await Promise.all([loadPendingLoads(), loadMovements()]);
+      } catch (error) {
+        console.error("SOLICITUD CARGA:", error);
+        message("loadMessage", translateError(error), true);
+      }
+    }));
+
+    $("nfcButton").addEventListener("click", () => {
+      message("nfcMessage", "📡 NFC simulado: esta función todavía no acredita saldo. La integración se realizará más adelante.");
+    });
+
+    $("replaceCardButton").addEventListener("click", () => withButton("replaceCardButton", async () => {
+      if (!currentUser || !userData) return;
+      if (!confirm("¿Querés reemplazar tu papel UQT? El número anterior dejará de ser el vigente.")) return;
+      try {
+        const oldNumber = userData.numeroUQT;
+        const newNumber = generatePassengerNumber();
+        await updateDoc(doc(db, "usuarios", currentUser.uid), { numeroUQT: newNumber, tarjetaActiva: true });
+        await addDoc(collection(db, "usuarios", currentUser.uid, "movimientos"), {
+          tipo: "papel_cambiado", descripcion: "Papel UQT reemplazado", monto: 0,
+          numeroAnterior: oldNumber, numeroNuevo: newNumber, fecha: serverTimestamp()
+        });
+        userData.numeroUQT = newNumber;
+        renderUser();
+        message("replaceMessage", "Nuevo papel UQT generado.");
+        await loadMovements();
+      } catch (error) {
+        console.error("CAMBIO PAPEL:", error);
+        message("replaceMessage", translateError(error), true);
+      }
+    }));
+
+    $("printButton").addEventListener("click", () => window.print());
+    $("refreshButton").addEventListener("click", () => withButton("refreshButton", async () => {
+      await loadAccount();
+      message("loginMessage", "");
+    }));
+    $("logoutButton").addEventListener("click", async () => {
+      try { await signOut(auth); }
+      catch (error) { console.error(error); alert(translateError(error)); }
+    });
+
+    onAuthStateChanged(auth, async user => {
+      currentUser = user;
+      userData = null;
+      if (!user) {
+        showPanel("loginPanel");
+        return;
+      }
+      try {
+        await loadAccount();
+      } catch (error) {
+        console.error("CARGA DE CUENTA:", error);
+        showPanel("loginPanel");
+        message("loginMessage", "Iniciaste sesión, pero no se pudieron leer tus datos: " + translateError(error), true);
+      }
+    });
+  </script>
+</body>
+</html>
